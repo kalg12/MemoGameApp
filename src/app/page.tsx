@@ -1,3 +1,8 @@
 export default function Home() {
-  return <h1>App Memorama</h1>;
+  return (
+    <>
+      <h1>App Memorama</h1>
+      <h2>Este cambio lo hice desde la lap</h2>
+    </>
+  );
 }
