@@ -10,6 +10,7 @@ type Card = {
 };
 
 type RankingEntry = {
+  name: string;
   time: number;
   attempts: number;
 };
@@ -27,6 +28,8 @@ export default function Home() {
   const [timer, setTimer] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [ranking, setRanking] = useState<RankingEntry[]>([]);
+  const [playerName, setPlayerName] = useState("");
+  const [gameStarted, setGameStarted] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -40,7 +43,6 @@ export default function Home() {
     if (storedRanking) {
       setRanking(JSON.parse(storedRanking));
     }
-    generateCards();
   }, []);
 
   const generateCards = () => {
@@ -54,6 +56,12 @@ export default function Home() {
     setAttempts(0);
     setTimer(0);
     setIsRunning(true);
+  };
+
+  const startGame = () => {
+    if (playerName.trim() === "") return;
+    generateCards();
+    setGameStarted(true);
   };
 
   const handleCardClick = (index: number) => {
@@ -93,7 +101,10 @@ export default function Home() {
   useEffect(() => {
     if (matchedCount === totalPairs) {
       setIsRunning(false);
-      const newRanking = [...ranking, { time: timer, attempts }];
+      const newRanking = [
+        ...ranking,
+        { name: playerName, time: timer, attempts },
+      ];
       newRanking.sort((a, b) =>
         a.time === b.time ? a.attempts - b.attempts : a.time - b.time
       );
@@ -107,60 +118,95 @@ export default function Home() {
 
   return (
     <Layout>
-      <div className="p-4 max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-center mb-4">App Memorama</h1>
-        <div className="flex justify-between mb-4">
-          <p>⏱️ Tiempo: {formatTime(timer)}</p>
-          <p>❌ Intentos: {attempts}</p>
-          <button
-            onClick={generateCards}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            Reiniciar
-          </button>
-        </div>
+      <div className="p-4 max-w-5xl mx-auto">
+        <h1 className="text-4xl font-bold text-center mb-4">App Memorama</h1>
 
-        <div className="grid grid-cols-6 gap-4">
-          {cards.map((card, idx) => (
-            <div
-              key={card.id}
-              className="cursor-pointer w-full aspect-square bg-gray-200 rounded shadow"
-              onClick={() => handleCardClick(idx)}
+        {!gameStarted ? (
+          <div className="text-center space-y-4">
+            <p className="text-lg max-w-xl mx-auto text-gray-700">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+              sed consequat libero, eget tincidunt nibh. Aenean lacinia, nunc et
+              suscipit bibendum, metus sem commodo purus, vitae laoreet turpis
+              lectus ut magna.
+            </p>
+            <input
+              type="text"
+              placeholder="Escribe tu nombre"
+              value={playerName}
+              onChange={(e) => setPlayerName(e.target.value)}
+              className="border rounded px-4 py-2 w-64 text-center"
+            />
+            <br />
+            <button
+              onClick={startGame}
+              className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
             >
-              <img
-                src={
-                  card.matched || selected.includes(idx)
-                    ? card.image
-                    : "/images/contraportada.png"
-                }
-                alt="card"
-                className="w-full h-full object-cover rounded"
-              />
-            </div>
-          ))}
-        </div>
-
-        {matchedCount === totalPairs && (
-          <div className="mt-6 text-center">
-            <h2 className="text-xl font-semibold text-green-600 mb-2">
-              ¡Juego terminado!
-            </h2>
-            <p>🎉 Tiempo final: {formatTime(timer)}</p>
-            <p>🎯 Intentos: {attempts}</p>
+              Jugar
+            </button>
           </div>
-        )}
+        ) : (
+          <>
+            <div className="flex justify-between mb-4 text-lg">
+              <p>👤 {playerName}</p>
+              <p>⏱️ Tiempo: {formatTime(timer)}</p>
+              <p>❌ Intentos: {attempts}</p>
+              <button
+                onClick={() => {
+                  setGameStarted(false);
+                  setPlayerName("");
+                  setCards([]);
+                  setIsRunning(false);
+                }}
+                className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
+              >
+                Salir
+              </button>
+            </div>
 
-        <div className="mt-8">
-          <h2 className="text-2xl font-semibold mb-2">🏆 Ranking</h2>
-          <ul className="space-y-1">
-            {ranking.slice(0, 5).map((entry, i) => (
-              <li key={i} className="bg-white p-2 rounded shadow text-sm">
-                #{i + 1} - Tiempo: {formatTime(entry.time)}, Intentos:{" "}
-                {entry.attempts}
-              </li>
-            ))}
-          </ul>
-        </div>
+            <div className="grid grid-cols-4 sm:grid-cols-6 gap-4">
+              {cards.map((card, idx) => (
+                <div
+                  key={card.id}
+                  className="cursor-pointer aspect-square bg-gray-200 rounded shadow-md"
+                  onClick={() => handleCardClick(idx)}
+                  style={{ width: "120px", height: "120px" }}
+                >
+                  <img
+                    src={
+                      card.matched || selected.includes(idx)
+                        ? card.image
+                        : "/images/contraportada.png"
+                    }
+                    alt="card"
+                    className="w-full h-full object-cover rounded"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {matchedCount === totalPairs && (
+              <div className="mt-6 text-center">
+                <h2 className="text-xl font-semibold text-green-600 mb-2">
+                  ¡Juego terminado!
+                </h2>
+                <p>🎉 Tiempo final: {formatTime(timer)}</p>
+                <p>🎯 Intentos: {attempts}</p>
+              </div>
+            )}
+
+            <div className="mt-8">
+              <h2 className="text-2xl font-semibold mb-2">🏆 Ranking</h2>
+              <ul className="space-y-1">
+                {ranking.slice(0, 5).map((entry, i) => (
+                  <li key={i} className="bg-white p-2 rounded shadow text-sm">
+                    #{i + 1} - {entry.name} - Tiempo: {formatTime(entry.time)},
+                    Intentos: {entry.attempts}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </>
+        )}
       </div>
     </Layout>
   );
