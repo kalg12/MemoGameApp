@@ -1,7 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import Layout from "./layout/Layout";
+import Instructions from "./components/Instructions";
+import GameStats from "./components/GameStats";
+import GameCompleted from "./components/GameCompleted";
+import RankingTable from "./components/RankingTable";
 
 type Card = {
   id: number;
@@ -64,6 +69,17 @@ export default function Home() {
     setGameStarted(true);
   };
 
+  const playAgain = () => {
+    generateCards();
+  };
+
+  const exitGame = () => {
+    setGameStarted(false);
+    setPlayerName("");
+    setCards([]);
+    setIsRunning(false);
+  };
+
   const handleCardClick = (index: number) => {
     if (
       selected.length === 2 ||
@@ -111,100 +127,66 @@ export default function Home() {
       setRanking(newRanking);
       localStorage.setItem("memoramaRanking", JSON.stringify(newRanking));
     }
-  }, [matchedCount]);
-
-  const formatTime = (seconds: number) =>
-    `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+  }, [matchedCount, totalPairs, ranking, playerName, timer, attempts]);
 
   return (
     <Layout>
-      <div className="p-4 max-w-5xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-4">App Memorama</h1>
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          🧠 Memorama App
+        </h1>
 
         {!gameStarted ? (
-          <div className="text-center space-y-4">
-            <p className="text-lg max-w-xl mx-auto text-gray-700">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-              sed consequat libero, eget tincidunt nibh. Aenean lacinia, nunc et
-              suscipit bibendum, metus sem commodo purus, vitae laoreet turpis
-              lectus ut magna.
-            </p>
-            <input
-              type="text"
-              placeholder="Escribe tu nombre"
-              value={playerName}
-              onChange={(e) => setPlayerName(e.target.value)}
-              className="border rounded px-4 py-2 w-64 text-center"
-            />
-            <br />
-            <button
-              onClick={startGame}
-              className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
-            >
-              Jugar
-            </button>
-          </div>
+          <Instructions
+            onStartGame={startGame}
+            playerName={playerName}
+            setPlayerName={setPlayerName}
+          />
         ) : (
           <>
-            <div className="flex justify-between mb-4 text-lg">
-              <p>👤 {playerName}</p>
-              <p>⏱️ Tiempo: {formatTime(timer)}</p>
-              <p>❌ Intentos: {attempts}</p>
-              <button
-                onClick={() => {
-                  setGameStarted(false);
-                  setPlayerName("");
-                  setCards([]);
-                  setIsRunning(false);
-                }}
-                className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
-              >
-                Salir
-              </button>
-            </div>
+            <GameStats
+              playerName={playerName}
+              timer={timer}
+              attempts={attempts}
+              onExit={exitGame}
+            />
 
-            <div className="grid grid-cols-4 sm:grid-cols-6 gap-4">
+            <div className="grid grid-cols-4 sm:grid-cols-6 gap-4 justify-items-center">
               {cards.map((card, idx) => (
                 <div
                   key={card.id}
-                  className="cursor-pointer aspect-square bg-gray-200 rounded shadow-md"
+                  className={`
+                    cursor-pointer aspect-square bg-white rounded-xl shadow-lg transition-all transform hover:scale-105 hover:shadow-xl
+                    ${selected.includes(idx) ? "ring-4 ring-blue-400" : ""}
+                    ${card.matched ? "ring-4 ring-green-400" : ""}
+                  `}
                   onClick={() => handleCardClick(idx)}
                   style={{ width: "120px", height: "120px" }}
                 >
-                  <img
+                  <Image
                     src={
                       card.matched || selected.includes(idx)
                         ? card.image
                         : "/images/contraportada.png"
                     }
                     alt="card"
-                    className="w-full h-full object-cover rounded"
+                    width={120}
+                    height={120}
+                    className="w-full h-full object-cover rounded-xl"
                   />
                 </div>
               ))}
             </div>
 
             {matchedCount === totalPairs && (
-              <div className="mt-6 text-center">
-                <h2 className="text-xl font-semibold text-green-600 mb-2">
-                  ¡Juego terminado!
-                </h2>
-                <p>🎉 Tiempo final: {formatTime(timer)}</p>
-                <p>🎯 Intentos: {attempts}</p>
-              </div>
+              <GameCompleted
+                timer={timer}
+                attempts={attempts}
+                onPlayAgain={playAgain}
+              />
             )}
 
-            <div className="mt-8">
-              <h2 className="text-2xl font-semibold mb-2">🏆 Ranking</h2>
-              <ul className="space-y-1">
-                {ranking.slice(0, 5).map((entry, i) => (
-                  <li key={i} className="bg-white p-2 rounded shadow text-sm">
-                    #{i + 1} - {entry.name} - Tiempo: {formatTime(entry.time)},
-                    Intentos: {entry.attempts}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <RankingTable ranking={ranking} />
           </>
         )}
       </div>
