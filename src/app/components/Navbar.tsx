@@ -2,7 +2,7 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <nav className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 shadow-lg">
+    <nav className="bg-[#169dd9] shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo y título */}
@@ -16,16 +16,16 @@ const Navbar = () => {
           {/* Menú principal */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <button className="text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
+              <button className="text-white hover:bg-[#f49920] hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
                 🎮 Jugar
               </button>
-              <button className="text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
+              <button className="text-white hover:bg-[#f49920] hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
                 🏆 Puntuaciones
               </button>
-              <button className="text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
+              <button className="text-white hover:bg-[#f49920] hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
                 ⚙️ Configuración
               </button>
-              <button className="text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
+              <button className="text-white hover:bg-[#f49920] hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
                 📖 Reglas
               </button>
             </div>
@@ -34,12 +34,12 @@ const Navbar = () => {
           {/* Estadísticas del jugador */}
           <div className="hidden md:flex items-center space-x-4">
             <div className="text-white text-sm">
-              <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full">
+              <span className="bg-[#f49920] bg-opacity-90 px-3 py-1 rounded-full">
                 ⭐ Nivel: 1
               </span>
             </div>
             <div className="text-white text-sm">
-              <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full">
+              <span className="bg-[#f49920] bg-opacity-90 px-3 py-1 rounded-full">
                 🔥 Racha: 0
               </span>
             </div>
@@ -47,7 +47,7 @@ const Navbar = () => {
 
           {/* Menú móvil */}
           <div className="md:hidden">
-            <button className="text-white hover:bg-white hover:bg-opacity-20 p-2 rounded-md">
+            <button className="text-white hover:bg-[#f49920] hover:text-white p-2 rounded-md">
               <svg
                 className="h-6 w-6"
                 fill="none"
@@ -68,22 +68,22 @@ const Navbar = () => {
 
       {/* Menú móvil expandido (oculto por defecto) */}
       <div className="md:hidden">
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black bg-opacity-20">
-          <button className="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-base font-medium w-full text-left">
+        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-[#169dd9] bg-opacity-95">
+          <button className="text-white hover:bg-[#f49920] hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">
             🎮 Jugar
           </button>
-          <button className="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-base font-medium w-full text-left">
+          <button className="text-white hover:bg-[#f49920] hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">
             🏆 Puntuaciones
           </button>
-          <button className="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-base font-medium w-full text-left">
+          <button className="text-white hover:bg-[#f49920] hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">
             ⚙️ Configuración
           </button>
-          <button className="text-white hover:bg-white hover:bg-opacity-20 block px-3 py-2 rounded-md text-base font-medium w-full text-left">
+          <button className="text-white hover:bg-[#f49920] hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">
             📖 Reglas
           </button>
-          <div className="pt-2 border-t border-white border-opacity-20">
+          <div className="pt-2 border-t border-[#f49920] border-opacity-50">
             <div className="text-white text-sm px-3 py-1">
-              ⭐ Nivel: 1 | 🔥 Racha: 0
+              <span className="bg-[#f49920] bg-opacity-90 px-2 py-1 rounded-full">⭐ Nivel: 1</span> <span className="bg-[#f49920] bg-opacity-90 px-2 py-1 rounded-full">🔥 Racha: 0</span>
             </div>
           </div>
         </div>
