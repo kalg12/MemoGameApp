@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
@@ -16,18 +17,18 @@ const Navbar = () => {
           {/* Menú principal */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <button className="text-white hover:bg-[#f49920] hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
+              <Link href="/" className="text-white hover:bg-[#f49920] hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
                 🎮 Jugar
-              </button>
-              <button className="text-white hover:bg-[#f49920] hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
+              </Link>
+              <Link href="/puntuaciones" className="text-white hover:bg-[#f49920] hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
                 🏆 Puntuaciones
-              </button>
-              <button className="text-white hover:bg-[#f49920] hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
+              </Link>
+              <Link href="/configuracion" className="text-white hover:bg-[#f49920] hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
                 ⚙️ Configuración
-              </button>
-              <button className="text-white hover:bg-[#f49920] hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
+              </Link>
+              <Link href="/acerca-de" className="text-white hover:bg-[#f49920] hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200">
                 📖 Reglas
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -69,18 +70,18 @@ const Navbar = () => {
       {/* Menú móvil expandido (oculto por defecto) */}
       <div className="md:hidden">
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-[#169dd9] bg-opacity-95">
-          <button className="text-white hover:bg-[#f49920] hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">
+          <Link href="/" className="text-white hover:bg-[#f49920] hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">
             🎮 Jugar
-          </button>
-          <button className="text-white hover:bg-[#f49920] hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">
+          </Link>
+          <Link href="/puntuaciones" className="text-white hover:bg-[#f49920] hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">
             🏆 Puntuaciones
-          </button>
-          <button className="text-white hover:bg-[#f49920] hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">
+          </Link>
+          <Link href="/configuracion" className="text-white hover:bg-[#f49920] hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">
             ⚙️ Configuración
-          </button>
-          <button className="text-white hover:bg-[#f49920] hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">
+          </Link>
+          <Link href="/acerca-de" className="text-white hover:bg-[#f49920] hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">
             📖 Reglas
-          </button>
+          </Link>
           <div className="pt-2 border-t border-[#f49920] border-opacity-50">
             <div className="text-white text-sm px-3 py-1">
               <span className="bg-[#f49920] bg-opacity-90 px-2 py-1 rounded-full">⭐ Nivel: 1</span> <span className="bg-[#f49920] bg-opacity-90 px-2 py-1 rounded-full">🔥 Racha: 0</span>
